@@ -12,47 +12,32 @@ public class CheckerFrame extends JFrame {
 	private static int qizin=0;
 	private static final long serialVersionUID = 4802277944291967336L;
 	CheckerBoard p = null;//画棋盘
-	
-	  Label L1;
-	  JButton L2;
-	  JButton L3;
-	  TextField text1;
-	  Button B1;
+	Label L1;
+	JButton L2;
+	JButton L3;
+	TextField text1;
+	Button B1;
 	  
 	public CheckerFrame() {
 		this.setSize(750, 600);
 		ImageIcon background = new ImageIcon("img/bound.jpg");  //背景图片
-		   JLabel label = new JLabel(background);  
-		           // 把标签的大小位置设置为图片刚好填充整个面板  
-		         label.setBounds(0, 0, this.getWidth(), this.getHeight());  
-		          // 把内容窗格转化为JPanel，否则不能用方法setOpaque()来使内容窗格透明  
-		          JPanel imagePanel = (JPanel) this.getContentPane();  
-		           imagePanel.setOpaque(false);  
-		           // 把背景图片添加到分层窗格的最底层作为背景  
-		           this.getLayeredPane().add(label, new Integer(Integer.MIN_VALUE));  
-		           //设置可见  
-		           
-		           //联机对战
-		     	 text1=new TextField();
-		    	  text1.setBounds(600, 250, 100, 25);
-		    	  L2=new JButton("连接");
-		    	  L2.setBounds(600, 275, 100, 25);
-		    	  L3=new JButton("建立联机");
-		    	  L3.setBounds(600, 200, 100, 25);
-		    	  add(text1);
-		    	  add(L3);
-		    	  add(L2);
-		     	  
-	
+		JLabel label = new JLabel(background);  
+		// 把标签的大小位置设置为图片刚好填充整个面板  
+		label.setBounds(0, 0, this.getWidth(), this.getHeight());  
+		// 把内容窗格转化为JPanel，否则不能用方法setOpaque()来使内容窗格透明  
+		JPanel imagePanel = (JPanel) this.getContentPane();  
+		imagePanel.setOpaque(false);  
+		// 把背景图片添加到分层窗格的最底层作为背景  
+		this.getLayeredPane().add(label, new Integer(Integer.MIN_VALUE));  
+
 		p = new CheckerBoard();
-       // setLayout(null);	
 		p.setBounds(0, 0, 576,576);
 		this.setLocation(200, 100);	
 		this.setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    	  this.add(p);
+    	this.add(p);
     	  
-    	  JMenuBar menuber = new JMenuBar();
+    	JMenuBar menuber = new JMenuBar();
     		JMenu jm1 = new JMenu("选项");
     		JMenu jm2 = new JMenu("设置");
     		JMenu jm3 = new JMenu("帮助");
@@ -67,7 +52,7 @@ public class CheckerFrame extends JFrame {
     		JMenuItem jm2_6 = new JMenuItem("中等人机");
     		JMenuItem jm2_5 = new JMenuItem("本机人人");
     		JMenuItem jm3_1 = new JMenuItem("关于我们");
-
+    		
 		jm1.add(jm1_1);
 		jm1.add(jm1_2);
 		jm1.add(jm1_3);
@@ -82,11 +67,11 @@ public class CheckerFrame extends JFrame {
 		menuber.add(jm1);
 		menuber.add(jm2);
 		menuber.add(jm3);
+		
 		this.setJMenuBar(menuber);
 		this.addMouseListener(p);
-		// 匿名虚构类建立监听
+		// 匿名虚构类建立监听// 匿名虚构类      选项，退出
 		jm1_2.addActionListener(new ActionListener() {
-			// 匿名虚构类      选项，退出
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -161,8 +146,7 @@ public class CheckerFrame extends JFrame {
 				repaint();
 			}
 			
-		}	
-				);
+		});
 		//设置   复杂人机
 		jm2_4.addActionListener(new ActionListener(){
 			@Override
@@ -177,8 +161,7 @@ public class CheckerFrame extends JFrame {
 				repaint();
 			}
 			
-		}	
-				);
+		});
 		//设置  中等人机
 		jm2_6.addActionListener(new ActionListener()
 		{
@@ -194,8 +177,7 @@ public class CheckerFrame extends JFrame {
 				repaint();
 			}
 			
-		}	
-				);
+		});
 		//设置     本机人人
 		jm2_5.addActionListener(new ActionListener(){
 			@Override
@@ -221,7 +203,7 @@ public class CheckerFrame extends JFrame {
 		this.setIconImage(Toolkit.getDefaultToolkit().createImage("img/c5.png"));
 		this.setVisible(true);
 	}
-	
+	//初始化棋盘
 	private void init() {
 		// TODO Auto-generated method stub
 		
