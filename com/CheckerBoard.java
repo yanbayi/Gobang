@@ -74,7 +74,6 @@ public class CheckerBoard extends JPanel implements MouseListener {
 	//╣Гдтобвс
 	private void computer(){
 		Graphics g = this.getGraphics();
-	
 		Computer com=new Computer();
 		
 		if(Inter==0){
@@ -88,9 +87,9 @@ public class CheckerBoard extends JPanel implements MouseListener {
 				canSetChess=1;
 			}else {
 				com.copyChess(num);
-				int maxequal=-500000;
-				int k=0;
-				int wuzi=0;
+				int maxequal=-500000;	//
+				int k=0;				//
+				int wuzi=0;				//
 				maxi=maxj=1;
 				for(int i=0;i<15;i++){
 					for(int j=0;j<15;j++){
@@ -144,7 +143,6 @@ public class CheckerBoard extends JPanel implements MouseListener {
 			computer();
 		}	
 	}
-
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -164,6 +162,6 @@ public class CheckerBoard extends JPanel implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
-	}	
+	}
 }
 	

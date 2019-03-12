@@ -37,7 +37,7 @@ public class Computer {
 		Q4=2000;
 		Q5=10000;
 	}
-public void easy()//简单模式：模拟三步下子
+	public void easy()//简单模式：模拟三步下子
 {	Q2O=1;
 Q2=10;
 Q3O=10;
@@ -47,14 +47,14 @@ Q4=2000;
 Q5=100000;
 	level=1;
 }
-public void copyChess(int num1[][])//复制当前棋盘
+	public void copyChess(int num1[][])//复制当前棋盘
 {
 		
 	for(int i=0;i<15;i++)
 		for(int j=0;j<15;j++)
 			num[i][j]=num1[i][j];
 }
- boolean generator(int i,int j)//困难模式
+	boolean generator(int i,int j)//困难模式
 //剪枝有邻居的定义是：想个两步以内至少有一个不为空的点即可
 //。比如 b[7,7] 有一个子，那么 b[6,7]是他的邻居，b[5,7] 也是，但是 b[4,7] 就不是，因为相隔了三步  
  //上下左右各自空出3格，，，有子占用的话  标记true
@@ -71,24 +71,24 @@ public void copyChess(int num1[][])//复制当前棋盘
 		}
 	return k;
 }
-class struct//启发式搜索的struct
+	class struct//启发式搜索的struct
 {
 	int i;
 	int j;
 	int value=0;
 	
 }
-public  int alphaBeta1(int chess,int alpha ,int beta,int i,int j)//模式选择
+	public  int alphaBeta1(int chess,int alpha ,int beta,int i,int j)//模式选择
 {
 	if(level==3)return alphaBeta(1, 5, alpha,  beta,i, j);
 	else if(level==1)return alphaBeta(1, 1, alpha,  beta,i, j);
 	else return getQuan(i,j);
 }
 
-/*启发式搜索就是找最优的点有了打分之后，我们就可以按照
+	/*启发式搜索就是找最优的点有了打分之后，我们就可以按照
  * 分数高低进行排序了。具体实现的时候，是根据按照 成五，活四，双三，活三，其他 的顺序来排序的。
  * 这个难度也比较高，我就按着这个顺序排序，取最优的五个进行下一步循环，大大减少了基数m可以搜索到第六步，*/
-private int alphaBeta(int chess, int depth, int alpha, int beta,int i,int j) //alphaBeta剪枝；极大极小搜索，人工智能第一步 模拟五步下子
+	private int alphaBeta(int chess, int depth, int alpha, int beta,int i,int j) //alphaBeta剪枝；极大极小搜索，人工智能第一步 模拟五步下子
 {
     int best;//最优值
     if( getQuan(i,j,chess%2+1)>=Q5)//五子连珠
@@ -186,7 +186,7 @@ private int alphaBeta(int chess, int depth, int alpha, int beta,int i,int j) //a
      return best;
 } 
 /*
-private int alphaBeta2(int chess, int depth, int alpha, int beta,int i,int j) //alphaBeta剪枝；极大极小博弈树，人工智能第一步 模拟五步下子
+	private int alphaBeta2(int chess, int depth, int alpha, int beta,int i,int j) //alphaBeta剪枝；极大极小博弈树，人工智能第一步 模拟五步下子
 {
     int best;
    if( getQuan(i,j,chess%2+1)>=Q5)//五子连珠
@@ -240,7 +240,7 @@ private int alphaBeta2(int chess, int depth, int alpha, int beta,int i,int j) //
     }
      return best;
 } */
-private int getPeopleQuan()//目前棋盘人的权值
+	private int getPeopleQuan()//目前棋盘人的权值
 {
 	int sum=0;
 	for(int i=0;i<14;i++)
@@ -250,7 +250,7 @@ private int getPeopleQuan()//目前棋盘人的权值
 	}
 	return sum;
 }
-private int getComputerQuan()//目前棋盘电脑的权值
+	private int getComputerQuan()//目前棋盘电脑的权值
 {
 	int sum=0;
 	for(int i=0;i<14;i++)
@@ -260,7 +260,7 @@ private int getComputerQuan()//目前棋盘电脑的权值
 	}
 	return sum;
 }
-public int getQuan(int i,int j,int chess)//每个位置的权值
+	public int getQuan(int i,int j,int chess)//每个位置的权值
 {
 	int q=0;
 	q+=getQuan0(i,j,chess);//4个方向的权值
@@ -269,40 +269,40 @@ public int getQuan(int i,int j,int chess)//每个位置的权值
 	q+=getQuan45(i,j,chess);
 	 return q;
 }
-private int getQuan0(int i,int j,int chess)//水平权值
+	private int getQuan0(int i,int j,int chess)//水平权值
 {
 	a=1;
 	b=0;
 	if(chess==1)return getquanPeople(i,j);
 	else return getquanComputer(i,j);
 }
-private int getQuan90(int i,int j,int chess)//90度角权值
+	private int getQuan90(int i,int j,int chess)//90度角权值
 {
 	a=0;
 	b=1;
 	if(chess==1)return getquanPeople(i,j);
 	else return getquanComputer(i,j);
 }
-private int getQuan135(int i,int j,int chess)//135度角权值
+	private int getQuan135(int i,int j,int chess)//135度角权值
 {
 	a=1;
 	b=-1;
 	if(chess==1)return getquanPeople(i,j);
 	else return getquanComputer(i,j);
 }
-private int getQuan45(int i,int j,int chess)//45度角权值
+	private int getQuan45(int i,int j,int chess)//45度角权值
 {
 	a=1;
 	b=1;
 	if(chess==1)return getquanPeople(i,j);
 	else return getquanComputer(i,j);
 }
-private void initc(int i,int j)
+	private void initc(int i,int j)
 {
 	c[0][0]=c[0][1]=i;
 	c[1][0]=c[1][1]=j;
 }
-private int getquanPeople(int i,int j)//计算自己和对方的权值相加就是最大权值
+	private int getquanPeople(int i,int j)//计算自己和对方的权值相加就是最大权值
 {
 	int samechesSnums=0;//相同棋子个数
 	int blankNums=0;
@@ -320,7 +320,7 @@ private int getquanPeople(int i,int j)//计算自己和对方的权值相加就是最大权值
 		qs=getQuanEqual(samechesSnums,blankNums);	
 	return qs;
 }
-private int getquanComputer(int i,int j)
+	private int getquanComputer(int i,int j)
 {
 	int samechessNumf=0;//相同棋子的数量
 	int blankNumf=0;//两边被堵几边
@@ -336,7 +336,7 @@ private int getquanComputer(int i,int j)
 			qf=getQuanEqual(samechessNumf,blankNumf);
 			return qf;
 }
-private int  getSamechessNums(int id) //判断几子连珠
+	private int  getSamechessNums(int id) //判断几子连珠
 //得到棋子的数量
 {
 	int num1=1;
@@ -361,7 +361,7 @@ private int  getSamechessNums(int id) //判断几子连珠
 	}
 	return num1;
 }
-private int getQuanEqual(int chess,int blank)//赋权值
+	private int getQuanEqual(int chess,int blank)//赋权值
 {
       if(chess==2&&blank==1)return Q2O;
 	else if(chess==2&&blank==2)return Q2;
@@ -372,7 +372,7 @@ private int getQuanEqual(int chess,int blank)//赋权值
 	else if(chess==5)return Q5;
 	else return 0;
 }
-public int getSame(int i,int j,int id)//判断输赢
+	public int getSame(int i,int j,int id)//判断输赢
 {
 	int q=0,k=0;
 	a=1;b=0;initc(i,j);
@@ -398,8 +398,8 @@ public int getSame(int i,int j,int id)//判断输赢
 
 
 
-//开始做的，中等人机
-private int getQuan(int i,int j)//每个位置的权值
+	//开始做的，中等人机
+	private int getQuan(int i,int j)//每个位置的权值
 {
 	int q=0;
 	q+=getQuan0(i,j);//4个方向的权值
@@ -408,31 +408,31 @@ private int getQuan(int i,int j)//每个位置的权值
 	q+=getQuan45(i,j);
 	return q;
 }
-private int getQuan0(int i,int j)
+	private int getQuan0(int i,int j)
 {
 	a=1;
 	b=0;
 	return getquanALL(i,j);
 }
-private int getQuan90(int i,int j)
+	private int getQuan90(int i,int j)
 {
 	a=0;
 	b=1;
 	return getquanALL(i,j);
 }
-private int getQuan135(int i,int j)
+	private int getQuan135(int i,int j)
 {
 	a=1;
 	b=-1;
 	return getquanALL(i,j);
 }
-private int getQuan45(int i,int j)
+	private int getQuan45(int i,int j)
 {
 	a=1;
 	b=1;
 	return getquanALL(i,j);
 }
-private int getquanALL(int i,int j)//计算自己和对方的权值相加就是最大权值
+	private int getquanALL(int i,int j)//计算自己和对方的权值相加就是最大权值
 {
 	int samechesSnums=0;//相同旗子个数
 	int samechessNumf=0;
