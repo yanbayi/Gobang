@@ -19,9 +19,9 @@ public class CheckerBoard extends JPanel implements MouseListener {
 	public static int Inter=0;//联机为1，默认为零
 	public static int serve=0;//联机的状态，先手为1，后手为0，建立服务器的为先手
 	public static int canSetChess=1;//是否可以下棋
-	public static int step=0;
-	private static int hui[][][]=new int[225][15][15];
-	
+	public static int step=0;//第几步
+	Internet int1=new Internet();//客户端
+	Server ser=new Server();//服务端
 	public  void paint(Graphics g){
 	
 		super.paint(g);
@@ -30,7 +30,7 @@ public class CheckerBoard extends JPanel implements MouseListener {
 		g.drawImage(img, 0, 0, 567, 567, this);
 		Image c1 = new ImageIcon("img/" + qizi1_name).getImage();
 		Image c2 = new ImageIcon("img/" + qizi2_name).getImage();
-		//绘制棋盘
+		//绘制棋盘重绘棋子
 		for (int i = 0; i < num.length; i++) {
 			for (int j = 0; j < num[i].length; j++) {
 				if (num[i][j] == 1) {
@@ -39,7 +39,6 @@ public class CheckerBoard extends JPanel implements MouseListener {
 					g.drawImage(c2, i * 35 + 20, j * 35 + 20, 35, 35, this);
 				}
 			}
-			// 重绘棋子
 		}
 	}
 
@@ -57,20 +56,90 @@ public class CheckerBoard extends JPanel implements MouseListener {
 			return ;
 		}
 		else {
-			//人ji下棋
-			c1 = new ImageIcon("img/" + qizi1_name).getImage();
-			canSetChess=0;
-			num[i][j]=1;
-			com.copyChess(num);
-			if(com.getSame(i,j,1)==5){
-				JOptionPane.showMessageDialog(null,"厉害了,您赢了");
+			//人人下棋
+			if(peo_peo){
+				count++;
+				if(count%2==1)
+				{
+					c1 = new ImageIcon("img/" + qizi1_name).getImage();
+					num[i][j]=1;
+					com.copyChess(num);
+					if(com.getSame(i,j,1)==5){
+						JOptionPane.showMessageDialog(null,"先手赢了");
+						canSetChess=3;
+					}
+				}
+					else {
+						 c1 = new ImageIcon("img/" + qizi2_name).getImage();
+						 num[i][j]=2;
+						 com.copyChess(num);
+						 if(com.getSame(i,j,2)==5){
+						 JOptionPane.showMessageDialog(null,"后手赢了");
+						 canSetChess=3;}
+					}
+			}
+			else {
+				c1 = new ImageIcon("img/" + qizi1_name).getImage();
+				canSetChess=0;
+				num[i][j]=1;
+				com.copyChess(num);
+				if(com.getSame(i,j,1)==5){
+					JOptionPane.showMessageDialog(null,"厉害了,您赢了");
 					canSetChess=3;
+				}
 			}
 		
 			g.drawImage(c1, i * 35 + 20, j * 35 + 20, 35, 35, this);
+			if(Inter==1){
+				if(serve==0)
+				int1.setChess(i, j);
+				else if(serve==1)
+					ser.setChess(i, j);
+				canSetChess=0;
+			}
 			step++;
 		}
 	} 
+	
+	class getC extends Thread{
+		Computer com=new Computer();
+		int i,j;
+
+		public void run()
+		{    
+				try{
+					   if(serve==0)
+						{
+						   i=int1.getChess();
+						   j=int1.getChess();}
+					   else 
+					   {
+						   i=ser.getChess();
+						   j=ser.getChess();
+					   }
+					   if(i==-1||j==-1){
+						   Inter=0;
+						   canSetChess=3;
+						   computer();
+					   }
+					   else {
+						   num[i][j]=2;
+						   repaint();	
+						   com.copyChess(num);
+					   if(com.getSame(i,j,2)==5){
+						   JOptionPane.showMessageDialog(null,"很遗憾，您输了");
+						   canSetChess=3;
+						}
+					   else canSetChess=1;
+					return ;
+					}
+				}catch(Exception e){
+					System.out.println(e.getMessage());
+					e.printStackTrace();
+				}
+		}
+	}
+	
 	//电脑下子
 	private void computer(){
 		Graphics g = this.getGraphics();
@@ -124,6 +193,11 @@ public class CheckerBoard extends JPanel implements MouseListener {
 					JOptionPane.showMessageDialog(null,"很遗憾，您输了！");
 					canSetChess=3;
 				}
+		}
+		if(Inter==1) {
+			getC t=new getC();
+			t.start(); 
+			canSetChess=3;
 		}
 	}
 	@Override
